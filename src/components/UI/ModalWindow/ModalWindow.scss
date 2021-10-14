@@ -1,0 +1,55 @@
+$white: #FFFFFFFF;
+$black: #000000FF;
+
+.custom-modal {
+  color: $black;
+  background: $white;
+  position: fixed;
+  border-radius: 15px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-left: 30%;
+  margin-top: 10%;
+  width: 40%;
+  height: 60%;
+
+  &__header {
+    text-transform: uppercase;
+    padding: 10px 25px;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__content {
+    height: 80%;
+    border-top: 1px solid #2a3847;
+    border-bottom: 1px solid #2a3847;
+    overflow-y: scroll;
+    background: $white;
+  }
+  &__paginator {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1vmin 15px;
+    height: 10%;
+    background: $white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    &__button {
+      border: none;
+      border-radius: 15px;
+      color: white;
+      width: 90px;
+      height: 30px;
+      background: #2a3847;
+      transition: background .8s;
+    }
+    &__button:hover {
+     background: #3b5e79;
+     transition: background .8s;
+    }
+  }
+}
