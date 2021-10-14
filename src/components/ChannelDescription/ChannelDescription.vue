@@ -1,26 +1,26 @@
 <template>
   <div class="container pt-2 content_color">
     <Navigation/>
-    <div class="mt-5">
+    <div v-if="channelInfo" class="mt-5">
       <button @click="backToMain" class="btn btn-info justify-content-start back-button">back</button>
       <div class="title_text mb-5">Channel information</div>
       <div class="d-flex justify-content-between container">
         <div class="d-flex">
-          <img :src="this.channelInfo.thumbnails.medium.url" alt="Logo">
+          <img :src="thumbnail" alt="Logo">
           <div class="d-flex flex-column text-start ms-3 description-text">
             <div>
-              <span class="description-category">Publication date:</span> {{ this.publishedDate }}
+              <span class="description-category">Publication date:</span> {{ publishedDate }}
             </div>
             <div>
-              <span class="description-category">Name:</span> {{ this.channelInfo.localized.title }}
+              <span class="description-category">Name:</span> {{ channelInfo.localized.title }}
             </div>
             <div>
-              <span class="description-category">Region:</span> {{ this.channelInfo.country }}
+              <span class="description-category">Region:</span> {{ channelInfo.country }}
             </div>
             <div class="d-flex">
               <span class="description-category">Description:</span>
               <div class="description-tooltip">
-                  &nbsp;{{ this.channelInfo.description }}
+                  &nbsp;{{ channelInfo.description }}
               </div>
             </div>
           </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <videos-tile :videoTile="videoCards"></videos-tile>
-      <loader v-if="this.loader === true"></loader>
+      <loader v-if="loader === true"></loader>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@
 import Navigation from '../MainContent/Navigation.vue'
 import VideosTile from './VideosTile'
 import Loader from '../UI/Loader'
-import axios from 'axios'
+import axios from '@/axios'
 
 export default {
   name: 'ChannelDescription',
@@ -51,29 +51,35 @@ export default {
   data () {
     return {
       pageName: 'Channel Description',
-      url: 'https://youtube.googleapis.com/youtube/v3/',
       channelInfo: null,
       videosInfo: null,
       loader: false,
       isShow: false
     }
   },
-  created () {
-    this.getChannelInfo()
+  async created () {
+    await this.getChannelInfo()
   },
   methods: {
-    getChannelInfo () {
-      axios.get(this.url + 'channels?part=snippet&id=' + this.$route.params.id + '&key=AIzaSyCEFXGbnaNkehzEEL51YHTKw5ivXhYzdWk')
-        .then(response => (
-          this.channelInfo = response.data.items[0].snippet
-        ))
+    async getChannelInfo () {
+      const response = await axios.get('/channels', {
+        params: {
+          part: 'snippet',
+          id: this.$route.params.id
+        }
+      })
+      this.channelInfo = response.data.items[0].snippet
     },
-    getListVideos () {
+    async getListVideos () {
       this.loader = true
-      axios.get(this.url + 'search?part=snippet&channelId=' + this.$route.params.id + '&maxResults=900&key=AIzaSyCEFXGbnaNkehzEEL51YHTKw5ivXhYzdWk')
-        .then(response => (
-          this.videosInfo = response.data.items
-        ))
+      const response = await axios.get('/search', {
+        params: {
+          part: 'snippet',
+          channelId: this.$route.params.id,
+          maxResults: 900
+        }
+      })
+      this.videosInfo = response.data.items
       this.loader = false
     },
     backToMain () {
@@ -81,8 +87,17 @@ export default {
     }
   },
   computed: {
+    thumbnail () {
+      if (this.channelInfo) {
+        return this.channelInfo.thumbnails.medium.url
+      }
+      return ''
+    },
     publishedDate () {
-      return this.channelInfo.publishedAt.slice(0, 10)
+      if (this.channelInfo) {
+        return this.channelInfo.publishedAt.slice(0, 10)
+      }
+      return null
     },
     videoCards () {
       if (this.videosInfo === null) return []

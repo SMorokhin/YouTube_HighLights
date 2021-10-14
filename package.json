@@ -39,7 +39,7 @@
   "browser": {
     "fs": false
   },
-  "node" : {
+  "node": {
     "fs": false
   }
 }

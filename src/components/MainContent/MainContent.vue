@@ -28,7 +28,7 @@
 
 <script>
 
-import axios from 'axios'
+import axios from '@/axios'
 import DescriptionDisplay from '@/components/MainContent/DescriptionDisplay.vue'
 
 export default {
@@ -42,28 +42,34 @@ export default {
       channelInfo: null,
       videoInfo: null,
       loaded: false,
-      url: 'https://youtube.googleapis.com/youtube/v3/',
       descriptionArray: []
     }
   },
   created () {
-    this.descriptionArray = this.getDescriptionData();
+    this.descriptionArray = this.getDescriptionData()
   },
   methods: {
     // gapi метод Search.list (получение результата по ключевому слову)
-    getChannel () {
-      axios.get(this.url + 'search?maxResults=1&q=' + this.channelName + '&key=AIzaSyCEFXGbnaNkehzEEL51YHTKw5ivXhYzdWk')
-        .then(response => (
-          this.channelInfo = response.data))
+    async getChannel () {
+      const response = await axios.get('/search', {
+        params: {
+          maxResults: 1,
+          q: this.channelName
+        }
+      })
+      this.channelInfo = response.data
       this.channelName = ''
       this.loaded = true
     },
     // поиск ID канала по ID видео
-    searchChannelByVideoId (videoId) {
-      axios.get(this.url + 'videos?part=snippet&id=' + videoId + '&key=AIzaSyCEFXGbnaNkehzEEL51YHTKw5ivXhYzdWk')
-        .then(response => (
-          this.videoInfo = response.data
-        ))
+    async searchChannelByVideoId (videoId) {
+      const response = await axios.get('/videos', {
+        params: {
+          part: 'snippet',
+          id: videoId
+        }
+      })
+      this.videoInfo = response.data
     },
     goToChannelDescription (channel) {
       const route = '/ChannelDescription/' + channel
@@ -82,7 +88,7 @@ export default {
           description: 'Click on the video, wait for the highlights, view the result'
         }
       ]
-    },
+    }
   },
   computed: {
     // массив ID каналов
