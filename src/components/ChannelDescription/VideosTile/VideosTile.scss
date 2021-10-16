@@ -1,0 +1,33 @@
+.tile-content {
+  width: 300px;
+  color: #ffc107;
+}
+
+hr {
+  color: #ffc107;
+}
+
+.tile-item {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #ffc107;
+}
+
+.comments-list {
+  border-bottom: 1px solid #2a3847;
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.close-modal-button {
+  width: 50px;
+  height: 25px;
+  font-size: 15px;
+  border: none;
+  background: #2a3847;
+  color: white;
+  border-radius: 10px;
+}

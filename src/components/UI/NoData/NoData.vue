@@ -13,19 +13,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'NoData'
-}
-</script>
-
-<style scoped>
-.no_data {
-  padding-top: 25rem;
-  width: 100%;
-  height: 100%;
-  font-size: 50px;
-  color: white;
-  text-align: center;
-}
-</style>
+<script src="./NoData.js"></script>
+<link rel="stylesheet" src="./NoData.scss">

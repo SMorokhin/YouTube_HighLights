@@ -22,9 +22,9 @@
 
 <script>
 // @ is an alias to /src
-import Navigation from '@/components/MainContent/Navigation.vue'
-import MainContent from '@/components/MainContent/MainContent.vue'
-import NoData from '@/components/NoData.vue'
+import Navigation from '@/components/MainContent/Navigation/Navigation.vue'
+import MainContent from '@/components/MainContent/MainContent/MainContent.vue'
+import NoData from '@/components/UI/NoData/NoData.vue'
 
 export default {
   name: 'Home',

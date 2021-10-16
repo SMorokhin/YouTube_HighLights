@@ -31,41 +31,7 @@
 <!--        :src="description.src"-->
 <!--      />-->
 <!--    </div>-->
-
 </template>
 
-<script>
-export default {
-  name: 'DescriptionDisplay',
-  props: {
-    description: {
-      type: Object,
-      required: true
-    }
-  }
-}
-</script>
-
-<style scoped>
-
-.text-description-right {
-  font-size: 28px;
-  margin-left: 20px;
-  text-align: start;
-}
-.desc:nth-child(odd) > video {
-  order: 0;
-  margin-left: auto;
-}
-.desc:nth-child(odd) > div {
-  order: 1;
-}
-.desc:nth-child(even) > video {
-  order: 1;
-  margin-left: 20px;
-}
-.desc:nth-child(even) > div {
-  order: 0;
-  margin-left: auto;
-}
-</style>
+<script src="./DescriptionDisplay.js"></script>
+<link rel="stylesheet" src="./DescriptionDisplay.scss">

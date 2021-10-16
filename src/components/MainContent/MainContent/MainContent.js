@@ -1,35 +1,5 @@
-<template>
-  <div class="content_color mt-4">
-      <div class="d-flex flex_content mb-4">
-        <input type="text"
-               placeholder="Enter channel name"
-               v-model="channelName"
-               @keyup.enter="getChannel"
-               class="form-control"
-               style="margin-right: 10px"
-        >
-      </div>
-      <div v-if="this.getChannelId !== null">
-          <a
-            @click="goToChannelDescription(getChannelId)"
-            :href="getChannelId"
-            class="link_style btn btn-light mb-3 link_description"
-          >Перейти к описанию</a>
-      </div>
-    <div class="title_text mb-3">
-      HOW IT WORKS:
-    </div>
-    <div>
-      <description-display v-for="description in descriptionArray" :key="description" :description="description"></description-display>
-    </div>
-
-  </div>
-</template>
-
-<script>
-
 import axios from '@/axios'
-import DescriptionDisplay from '@/components/MainContent/DescriptionDisplay.vue'
+import DescriptionDisplay from '@/components/MainContent/DescriptionDisplay/DescriptionDisplay.vue'
 
 export default {
   name: 'MainContent',
@@ -122,24 +92,3 @@ export default {
     }
   }
 }
-</script>
-
-<style scoped>
-.content_color {
-  color: white;
-}
-.link_style {
-  text-decoration: none;
-  color: white;
-  text-transform: uppercase;
-}
-.title_text {
-  font-size: 32px;
-  color: #ffc107;
-}
-.link_description {
-  color: #3d3d3d;
-  width: 30%;
-}
-
-</style>
