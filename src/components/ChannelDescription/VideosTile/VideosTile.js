@@ -1,4 +1,4 @@
-import axios from 'axios'
+import * as YoutubeMethods from '../../../js/youtubeapi'
 
 export default {
   name: 'VideosTile',
@@ -17,12 +17,9 @@ export default {
     }
   },
   methods: {
-    openModal (id) {
+    async openModal (id) {
       if (this.isShow === false) {
-        axios.get(this.url + 'commentThreads?part=snippet&maxResults=50&videoId=' + id + '&key=AIzaSyCEFXGbnaNkehzEEL51YHTKw5ivXhYzdWk')
-          .then(response => (
-            this.videoComments = response.data.items
-          ))
+        this.videoComments = await YoutubeMethods.yGetModalData(id)
       }
       this.isShow = !this.isShow
     },
@@ -30,7 +27,7 @@ export default {
       this.isShow = false
     },
     convertTimeLineToSeconds (timeLine) {
-      let times = timeLine.split(':').reverse()
+      const times = timeLine.split(':').reverse()
       let result = 0
       let secondsMultiplier = 1
 

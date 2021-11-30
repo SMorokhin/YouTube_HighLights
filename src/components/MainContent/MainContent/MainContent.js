@@ -1,4 +1,4 @@
-import axios from '@/axios'
+import * as YoutubeMethods from '../../../js/youtubeapi'
 import DescriptionDisplay from '@/components/MainContent/DescriptionDisplay/DescriptionDisplay.vue'
 
 export default {
@@ -19,27 +19,13 @@ export default {
     this.descriptionArray = this.getDescriptionData()
   },
   methods: {
-    // gapi метод Search.list (получение результата по ключевому слову)
     async getChannel () {
-      const response = await axios.get('/search', {
-        params: {
-          maxResults: 1,
-          q: this.channelName
-        }
-      })
-      this.channelInfo = response.data
+      this.channelInfo = await YoutubeMethods.yGetChannelByVideoId(this.channelName)
       this.channelName = ''
       this.loaded = true
     },
-    // поиск ID канала по ID видео
     async searchChannelByVideoId (videoId) {
-      const response = await axios.get('/videos', {
-        params: {
-          part: 'snippet',
-          id: videoId
-        }
-      })
-      this.videoInfo = response.data
+      this.videoInfo = await YoutubeMethods.ySearchChannelByVideoId(videoId)
     },
     goToChannelDescription (channel) {
       const route = '/ChannelDescription/' + channel

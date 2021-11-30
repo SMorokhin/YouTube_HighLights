@@ -1,7 +1,7 @@
 import Navigation from '../../MainContent/Navigation/Navigation.vue'
 import VideosTile from '../VideosTile/VideosTile.vue'
 import Loader from '../../UI/Loader/Loader.vue'
-import axios from '@/axios'
+import * as YoutubeMethods from '../../../js/youtubeapi'
 
 export default {
   name: 'ChannelDescription',
@@ -24,24 +24,11 @@ export default {
   },
   methods: {
     async getChannelInfo () {
-      const response = await axios.get('/channels', {
-        params: {
-          part: 'snippet',
-          id: this.$route.params.id
-        }
-      })
-      this.channelInfo = response.data.items[0].snippet
+      this.channelInfo = await YoutubeMethods.yGetChannelInfo(this.$route.params.id)
     },
     async getListVideos () {
       this.loader = true
-      const response = await axios.get('/search', {
-        params: {
-          part: 'snippet',
-          channelId: this.$route.params.id,
-          maxResults: 900
-        }
-      })
-      this.videosInfo = response.data.items
+      this.videosInfo = await YoutubeMethods.yGetListVideos(this.$route.params.id)
       this.loader = false
     },
     backToMain () {
